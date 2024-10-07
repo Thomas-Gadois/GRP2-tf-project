@@ -18,10 +18,10 @@ resource "aws_lb" "GRP2-alb" {
 # Création du Target Group pour l'ALB
 resource "aws_lb_target_group" "GRP2-tg" {
   name        = "GRP2-tg"
-  port        = 80
+  port        = 31000  # Choisir un port dans la plage 30000-32767
   protocol    = "HTTP"
   vpc_id      = aws_vpc.vpc_name.id
-  target_type = "ip"
+  target_type = "instance" 
 
   health_check {
     healthy_threshold   = 2
@@ -29,6 +29,7 @@ resource "aws_lb_target_group" "GRP2-tg" {
     timeout             = 3
     path                = "/healthz"
     interval            = 30
+    port                = "traffic-port"
   }
 }
 
