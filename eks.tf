@@ -2,8 +2,9 @@
 
 # Création du cluster EKS
 resource "aws_eks_cluster" "GRP2-eks-cluster" {
-  name     = var.cluster_name
-  role_arn = "arn:aws:iam::268849317545:role/EKS_Students" 
+  name = var.cluster_name
+  #role_arn = "arn:aws:iam::268849317545:role/EKS_Students"
+  role_arn = data.aws_iam_role.eks_students_role.arn # Utilisation du data source
 
   vpc_config {
     subnet_ids              = concat(aws_subnet.GRP2-public-subnet[*].id, aws_subnet.GRP2-private-subnet[*].id)
@@ -31,7 +32,7 @@ resource "aws_eks_node_group" "GRP2-node-group" {
   scaling_config {
     desired_size = 2
     max_size     = 3
-    min_size     = 1
+    min_size     = 2
   }
 
   instance_types = ["t2.micro"]
@@ -42,22 +43,29 @@ resource "aws_eks_node_group" "GRP2-node-group" {
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
   ]
+
+  tags = {
+    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
+  }
 }
 
 # Installation des add-ons EKS
 resource "aws_eks_addon" "vpc-cni" {
   cluster_name = aws_eks_cluster.GRP2-eks-cluster.name
   addon_name   = "vpc-cni"
+  depends_on   = [aws_eks_node_group.GRP2-node-group]
 }
 
 resource "aws_eks_addon" "coredns" {
   cluster_name = aws_eks_cluster.GRP2-eks-cluster.name
   addon_name   = "coredns"
+  depends_on   = [aws_eks_node_group.GRP2-node-group] #Dépendance pour donner un ordre de déploiment plus rapide
 }
 
 resource "aws_eks_addon" "kube-proxy" {
   cluster_name = aws_eks_cluster.GRP2-eks-cluster.name
   addon_name   = "kube-proxy"
+  depends_on   = [aws_eks_node_group.GRP2-node-group]
 }
 
 # Rôle IAM pour le node group EKS
@@ -97,5 +105,6 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly" {
 # Attachement de la politique EKS Cluster au rôle EKS_Students
 resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = "EKS_Students"
+  #role       = "EKS_Students"
+  role = data.aws_iam_role.eks_students_role.name # Utilisation du data source
 }
