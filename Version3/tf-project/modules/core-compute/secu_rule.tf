@@ -38,5 +38,3 @@ resource "aws_default_security_group" "GRP2-security-rule" {
     Name = "GRP2-security-rule"
   }
 }
-
-#Trouver comment nommer les règles, la description est à la fin de la ligne pas au début
