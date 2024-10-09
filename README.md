@@ -1,2 +1,3 @@
 - Version 1 : Comprends le projet de base sans bonus
 - Version 2 : Comprends le projet de base avec le bonus pour le module
+- Version 3 : Comprends le projet de base avec les bonus pour le module et sécurser le tfstate dans un bucket S3 et le code pour déployer le bucket S3
