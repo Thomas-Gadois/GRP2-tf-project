@@ -9,3 +9,4 @@ Comprends le projet de base sans bonus
 - Les addons VPC-CNI, CoreDNS, et kube-proxy devront être obligatoirement installés sur le cluster
 - Le rôle IAM qui devra être associé à EKS sera le rôle EKS_Students, déjà présent sur la plateforme AWS fournie en cours.
 - Un load balancer applicatif
+- 
