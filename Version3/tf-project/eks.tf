@@ -113,7 +113,3 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
   #role       = "EKS_Students"
   role = data.aws_iam_role.eks_students_role.name # Utilisation du data source
 }
-
-
-#eksctl utils write-kubeconfig --cluster=GRP2-eks-cluster --region=us-west-1
-#kubectl get nodes
