@@ -9,9 +9,3 @@ variable "bucket_name" {
   type        = string
   default     = "grp2-terraform-state-bucket"
 }
-
-variable "dynamodb_table_name" {
-  description = "Le nom de la table DynamoDB pour le verrouillage du state"
-  type        = string
-  default     = "grp2-terraform-state-lock"
-}
