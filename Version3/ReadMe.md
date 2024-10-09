@@ -3,7 +3,7 @@ Comprends :
 - le projet de base
 - le bonus pour le module et celui
 - le bonuspour sécurser le tfstate dans un bucket S3
-Le code pour déployer le bucket S3
+- Le code pour déployer le bucket S3
 
 Un module local nommé "core-compute"
 
