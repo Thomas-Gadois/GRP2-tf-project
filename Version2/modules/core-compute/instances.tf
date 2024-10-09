@@ -11,5 +11,3 @@ resource "aws_instance" "GRP2-EC2" {
     Name = "GRP2-EC2"
   }
 }
-
-#ssh -i Keys/GRP2-Key.pem 
