@@ -8,10 +8,8 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket         = "grp2-terraform-state-bucket"
-    key            = "terraform.tfstate"
+    #key            = "terraform.tfstate"
     region         = "us-west-1"
-    dynamodb_table = "grp2-terraform-state-lock"
-    encrypt        = true
   }
 }
 
